@@ -95,6 +95,12 @@ public class EchoServer extends AbstractServer
 	  clientDisconnected(client);
   }
   
+  public void quit(){
+	    try{ close(); }
+	    catch(IOException e) {}
+	    System.exit(0);
+  }
+  
   //Class methods ***************************************************
   /**
    * This method is responsible for the creation of 
