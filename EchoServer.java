@@ -17,14 +17,13 @@ import ocsf.server.*;
  */
 public class EchoServer extends AbstractServer 
 {
+	ServerConsole servCon;
   //Class variables *************************************************
   
   /**
    * The default port to listen on.
    */
   final public static int DEFAULT_PORT = 5555;
-  
-  ServerConsole serverCon;
   //Constructors ****************************************************
   
   /**
@@ -51,11 +50,13 @@ public class EchoServer extends AbstractServer
     this.sendToAllClients(msg);
   }
   
-  public void handleMessageFromServerUI(String message)
+  // méthode qui prend le message de la console d'un serveur
+  public void handleMessageFromServerUI(String message, ServerConsole serverCon)
   {
-  	super.sendToAllClients(message);
+	serverCon.display(message);
   	super.sendToAllClients(message);
   }
+
     
   /**
    * This method overrides the one in the superclass.  Called
@@ -103,7 +104,7 @@ public class EchoServer extends AbstractServer
    *          if no argument is entered.
    */
   public static void main(String[] args) 
-  {
+  {  
     int port = 0; //Port to listen on
 
     try
@@ -116,15 +117,18 @@ public class EchoServer extends AbstractServer
     }
 	
     EchoServer sv = new EchoServer(port);
+    ServerConsole serverCon = new ServerConsole(port);
     
-    try 
+    try
     {
-      sv.listen(); //Start listening for connections
+ 		serverCon.accept();
     } 
-    catch (Exception ex) 
+    catch (Exception ex)
     {
       System.out.println("ERROR - Could not listen for clients!");
     }
+
+    
   }
 }
 //End of EchoServer class
