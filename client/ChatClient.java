@@ -72,11 +72,28 @@ public class ChatClient extends AbstractClient
     }
     catch(IOException e)
     {
-      clientUI.display
-        ("Could not send message to server.  Terminating client.");
+      clientUI.display("Could not send message to server. Terminating client.");
       quit();
     }
   }
+  
+  	// on print que la connexion s'est arrêtée
+	protected void connectionClosed() {
+		System.out.println("The server has closed, you have been disconnected !");
+	}
+	
+	/*
+		on print le message d'exception causé par la fin
+		d'exécution de EchoServer.java et on quitte l'app.
+	*/
+	protected void connectionException(Exception exception) {
+		/*
+			on peut enlever le print pour éviter
+			d'avoir "Connection reset" d'affiché
+		*/
+		System.out.println(exception.getMessage());
+		quit();
+	}
   
   /**
    * This method terminates the client.

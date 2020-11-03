@@ -45,9 +45,7 @@ public class EchoServer extends AbstractServer
    * @param msg The message received from the client.
    * @param client The connection from which the message originated.
    */
-  public void handleMessageFromClient
-    (Object msg, ConnectionToClient client)
-  {
+  public void handleMessageFromClient(Object msg, ConnectionToClient client){
     System.out.println("Message received: " + msg + " from " + client);
     this.sendToAllClients(msg);
   }
@@ -58,8 +56,7 @@ public class EchoServer extends AbstractServer
    */
   protected void serverStarted()
   {
-    System.out.println
-      ("Server listening for connections on port " + getPort());
+    System.out.println("Server listening for connections on port " + getPort());
   }
   
   /**
@@ -68,12 +65,29 @@ public class EchoServer extends AbstractServer
    */
   protected void serverStopped()
   {
-    System.out.println
-      ("Server has stopped listening for connections.");
+    System.out.println("Server has stopped listening for connections.");
+  }
+  
+  
+  /* 
+	  trois méthodes suivantes sont nécéssaires pour afficher
+	  un message sur le EchoServer console qu'un client s'est
+	  déconnecté ou connecté 
+  */
+  protected void clientConnected(ConnectionToClient client){
+	  System.out.println("Client has connected");
+  }
+  
+  synchronized protected void clientDisconnected(ConnectionToClient client){
+	  System.out.println("Client has disconnected");
+  }
+  
+  synchronized protected void clientException(ConnectionToClient client, 
+		  									  Throwable exception) {
+	  clientDisconnected(client);
   }
   
   //Class methods ***************************************************
-  
   /**
    * This method is responsible for the creation of 
    * the server instance (there is no UI in this phase).

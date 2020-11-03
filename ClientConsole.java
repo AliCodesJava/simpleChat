@@ -52,16 +52,13 @@ public class ClientConsole implements ChatIF
    */
   public ClientConsole(String host, int port) 
   {
-    try 
+    try
     {
       client= new ChatClient(host, port, this);
-      
-      
     } 
     catch(IOException exception) 
     {
-      System.out.println("Error: Can't setup connection!"
-                + " Terminating client.");
+      System.out.println("Error: Can't setup connection! Terminating client.");
       System.exit(1);
     }
     
@@ -91,11 +88,10 @@ public class ClientConsole implements ChatIF
     } 
     catch (Exception ex) 
     {
-      System.out.println
-        ("Unexpected error while reading from console!");
+      System.out.println("Unexpected error while reading from console!");
     }
   }
-
+  
   /**
    * This method overrides the method in the ChatIF interface.  It
    * displays a message onto the screen.
@@ -118,17 +114,19 @@ public class ClientConsole implements ChatIF
   public static void main(String[] args) 
   {
     String host = "";
-
+    int port = 0;
 
     try
     {
       host = args[0];
+      port = Integer.parseInt(args[1]);
     }
     catch(ArrayIndexOutOfBoundsException e)
     {
       host = "localhost";
+      port = DEFAULT_PORT;
     }
-    ClientConsole chat= new ClientConsole(host, DEFAULT_PORT);
+    ClientConsole chat= new ClientConsole(host, port);
     chat.accept();  //Wait for console data
   }
 }
