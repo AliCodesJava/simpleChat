@@ -3,6 +3,7 @@
 // license found at www.lloseng.com 
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import client.*;
@@ -77,15 +78,63 @@ public class ClientConsole implements ChatIF
   {
     try
     {
-
       String message;
-
       while (true) 
       {
         message = fromConsole.nextLine();
-        client.handleMessageFromClientUI(message);
-      }
-    } 
+        
+        if(message.charAt(0) == '#' && message.length() != 1){
+          	String[] comArg = message.substring(1)
+          					  .toLowerCase().split(" ");
+          	
+      		switch(comArg[0]){
+    	    	case "quit":
+    	    		System.out.println("Terminating session.");
+    	   			client.quit();
+    	   			break;
+    	    	case "login":
+    	    		if(!client.isConnected())
+    	    			client.openConnection();
+    	    		else { 
+    	    			System.out.println("You have to be disconnected to perform this action");
+    	    		}
+    	    		break;
+    	   		case "logoff":
+    	   			if(client.isConnected())
+    	   				client.closeConnection();
+        			break;
+    	    	case "gethost":
+    	    		System.out.println(client.getHost());
+    	    		break;
+    	    	case "getport":
+    	    		System.out.println(client.getPort());
+    	    		break;
+   	    		case "sethost":
+   	    			if(!client.isConnected()) {
+    	    			client.setHost(comArg[1]);
+    	    			System.out.println("Host set to " + comArg[1]);
+    	    		}
+    	    		else {
+    	    			System.out.println("You have to be disconnected to perform this action");
+    	    		}
+    	    		break;
+    	    	case "setport":
+    	    		if(!client.isConnected())
+    	    			client.setPort(Integer.parseInt(comArg[1]));
+    	    		else { 
+    	    			System.out.println("You have to be disconnected to perform this action");
+    	    		}
+    	    		break;
+    	    	default:
+    	    		System.out.println("Unknown : this command does not exist.");
+    	    		break;
+      		}
+        }
+        else {
+        	client.handleMessageFromClientUI(message);	
+        }
+      } 
+    }
     catch (Exception ex) 
     {
       System.out.println("Unexpected error while reading from console!");

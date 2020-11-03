@@ -67,8 +67,8 @@ public class ChatClient extends AbstractClient
   public void handleMessageFromClientUI(String message)
   {
     try
-    {
-      sendToServer(message);
+    {	
+    	sendToServer(message);
     }
     catch(IOException e)
     {
@@ -79,7 +79,7 @@ public class ChatClient extends AbstractClient
   
   	// on print que la connexion s'est arrêtée
 	protected void connectionClosed() {
-		System.out.println("The server has closed, you have been disconnected !");
+		System.out.println("You have been disconnected from the server !");
 	}
 	
 	/*
