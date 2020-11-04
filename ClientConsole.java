@@ -93,8 +93,10 @@ public class ClientConsole implements ChatIF
     	   			client.quit();
     	   			break;
     	    	case "login":
-    	    		if(!client.isConnected())
+    	    		if(!client.isConnected()) {
+    	    			client = new ChatClient(client.getLoginId(), client.getHost(), client.getPort(), this);
     	    			client.openConnection();
+    	    		}
     	    		else { 
     	    			System.out.println("You have to be disconnected to perform this action");
     	    		}
