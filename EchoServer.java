@@ -46,8 +46,16 @@ public class EchoServer extends AbstractServer
    * @param client The connection from which the message originated.
    */
   public void handleMessageFromClient(Object msg, ConnectionToClient client){
-    System.out.println("Message received: " + msg + " from " + client);
-    this.sendToAllClients(msg);
+	try {
+		String[] message = msg.toString().split(" ");
+		if(message[0].equals("#login")) {
+			client.setInfo("loginId", message[1]);
+			return;
+		}
+	} catch(ArrayIndexOutOfBoundsException e){}
+	  
+    System.out.println("Message received: " + msg + " from " + client.getInfo("loginId") + " : " + client + " ");
+    this.sendToAllClients(client.getInfo("loginId") + " : " + msg);
   }
   
   // méthode qui prend le message de la console d'un serveur

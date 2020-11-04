@@ -74,7 +74,7 @@ public class ChatClient extends AbstractClient
   {
     try
     {	
-    	sendToServer(message);
+    	sendToServer(message.split(" : ")[1]);
     }
     catch(IOException e)
     {
