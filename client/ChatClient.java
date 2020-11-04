@@ -46,8 +46,8 @@ public class ChatClient extends AbstractClient
     this.clientUI = clientUI;
     this.loginId = loginId;
     openConnection();
+    super.sendToServer("#login " + loginId);
   }
-
   
   //Instance methods ************************************************
     
