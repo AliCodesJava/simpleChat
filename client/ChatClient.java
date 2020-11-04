@@ -85,7 +85,7 @@ public class ChatClient extends AbstractClient
   
   	// on print que la connexion s'est arrêtée
 	protected void connectionClosed() {
-		System.out.println("You have been disconnected from the server !");
+		System.out.println(loginId + "You have been disconnected from the server !");
 	}
 	
 	/*

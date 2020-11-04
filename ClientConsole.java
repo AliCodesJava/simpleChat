@@ -59,7 +59,7 @@ public class ClientConsole implements ChatIF
     } 
     catch(IOException exception) 
     {
-      System.out.println("Error: Can't setup connection! Terminating client.");
+        System.out.println("Cannot open connection.  Awaiting command.");
       System.exit(1);
     }
     
@@ -113,16 +113,18 @@ public class ClientConsole implements ChatIF
     	    		break;
    	    		case "sethost":
    	    			if(!client.isConnected()) {
-    	    			client.setHost(comArg[1]);
     	    			System.out.println("Host set to " + comArg[1]);
+    	    			client.setHost(comArg[1]);
     	    		}
     	    		else {
     	    			System.out.println("You have to be disconnected to perform this action");
     	    		}
     	    		break;
     	    	case "setport":
-    	    		if(!client.isConnected())
+    	    		if(!client.isConnected()) {
+    	    			System.out.println("Port set to " + comArg[1]);
     	    			client.setPort(Integer.parseInt(comArg[1]));
+    	    		}
     	    		else { 
     	    			System.out.println("You have to be disconnected to perform this action");
     	    		}
@@ -176,11 +178,16 @@ public class ClientConsole implements ChatIF
     }
     catch(ArrayIndexOutOfBoundsException e)
     {
+    	loginId = "";
       host = "localhost";
       port = DEFAULT_PORT;
     }
+    if(loginId == ""){
+    	System.out.println("ERROR - No login ID specified.  Connection aborted.");
+    	return;
+    }
     ClientConsole chat= new ClientConsole(loginId, host, port);
-    if(loginId == ""){ return; }
+
     chat.accept();  //Wait for console data
   }
 }

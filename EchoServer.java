@@ -47,11 +47,11 @@ public class EchoServer extends AbstractServer
    * @param client The connection from which the message originated.
    */
   public void handleMessageFromClient(Object msg, ConnectionToClient client){
-	  if(alreadyLoggedIn == true){
+	  String[] message = msg.toString().split(" ");
+	  if(alreadyLoggedIn == true && message[0].equals("#login")){
 		  System.out.println("You have already logged in!");
 	  }
 	  
-	  String[] message = msg.toString().split(" ");
 	  if(message[0].equals("#login")) {
 		client.setInfo("loginId", message[1]);
 		alreadyLoggedIn = true;
